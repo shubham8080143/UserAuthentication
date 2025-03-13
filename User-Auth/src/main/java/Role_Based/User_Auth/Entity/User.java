@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,18 +29,36 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 
+	@Enumerated(EnumType.STRING) // Ensures role is stored as a string in DB
 	private Role role;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return email;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return true; // Change this based on your logic
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true; // Change this based on your logic
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true; // Change this based on your logic
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true; // Change this based on your logic
+	}
 }

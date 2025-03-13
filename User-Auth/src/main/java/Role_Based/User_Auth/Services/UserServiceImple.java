@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImple implements UserService {
 	private final UserRepository userRepository;
 
-	public UserDetails loaUserByUserName(String username) {
+	public UserDetails loadUserByUserName(String username) {
 		return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 	}
 

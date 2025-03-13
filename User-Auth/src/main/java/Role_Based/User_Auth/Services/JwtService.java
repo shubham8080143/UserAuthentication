@@ -16,8 +16,11 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-	private static final String SECRET_KEY = "your-very-secret-key-your-very-secret-key"; // At least 256-bit key
-																							// (Base64 encoded)
+	private static final String SECRET_KEY = "2149ee0bdc25629fd6168f0340dd197b03dbf1abdae326eb6d34360204224b77"; // At
+																													// least
+																													// 256-bit
+																													// key
+	// (Base64 encoded)
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -31,6 +34,12 @@ public class JwtService {
 	public String generateToken(UserDetails userDetails) {
 		return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24 minutes expiry
+				.signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+	}
+
+	public String generateRefreshToken(UserDetails userDetails) {
+		return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 68480000)) // 24 minutes expiry
 				.signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
 	}
 
