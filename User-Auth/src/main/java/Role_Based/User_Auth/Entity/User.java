@@ -28,7 +28,7 @@ public class User implements UserDetails {
 	private String name;
 	private String email;
 	private String password;
-
+	private String profilePictureUrl;
 	@Enumerated(EnumType.STRING) // Ensures role is stored as a string in DB
 	private Role role;
 
